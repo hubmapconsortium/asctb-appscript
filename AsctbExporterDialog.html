@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body style="margin-top:20px;">
+    <div class="row">
+      <div class="col s12 center exporter-header">
+        <img width="240" src="https://drive.google.com/uc?export=view&id=133S43K1uQcSwGjqWWhYySgqxFIDVA0nS" />
+      </div>
+    </div>
+    <div class="row">
+      <form class="col s12">
+        <div class="input-field col s12">
+          <input placeholder="(Insert number only)" name="header-row-index" id="header-row-index" type="number" min="11" class="validate">
+          <label for="header-row-index">Header Row Index</label>
+        </div>
+        <div class="input-field col s12">
+          <input placeholder="(Insert table range)" name="data-range" id="data-range" type="text" class="validate">
+          <label for="data-range">Data Range</label>
+        </div>
+        <div class="input-field col s12">
+          <input placeholder="(Insert 64 characters)" name="cedar-api-key" id="cedar-api-key" type="text" class="validate">
+          <label for="cedar-api-key">CEDAR API Key</label>
+        </div>
+        <div class="input-field col s12">
+          <input placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" name="cedar-user-id" id="cedar-user-id" type="text" class="validate">
+          <label for="cedar-user-id">CEDAR User ID</label>
+        </div>
+        <div class="input-field col s12">
+          <input placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" name="cedar-folder-id" id="cedar-folder-id" type="text" class="validate">
+          <label for="cedar-folder-id">CEDAR Folder ID</label>
+        </div>
+        <div class="switch col s12">
+          <label>
+            <input name="do-dry-run" id="do-dry-run" type="checkbox">
+            <span for="do-dry-run">Perform table validation only</span>
+          </label>
+        </div>
+        <div class="submit-button col s12 center" style="margin-top:25px;">
+          <button class="btn waves-effect waves-light s10" id="run-export" type="submit" name="action">Export This Sheet</button>
+        </div>
+        <div class="col s12" style="margin-top:20px;" id="output-messages"></div>
+        <div class="col s12 center" id="progress-bar"></div>
+      </form>
+      <script>
+        $(function () {
+            $('#run-export').click(runExport);
+        });
+        function runExport() {
+          $('#progress-bar').html("");
+          $('#output-messages').html("");
+
+          var headerRowIndex = parseInt($('input[name=header-row-index]').val());
+          var dataRange = $('input[name=data-range').val();
+          var cedarApiKey = $('input[name=cedar-api-key').val();
+          var cedarUserId = $('input[name=cedar-user-id').val();
+          var cedarFolderId = $('input[name=cedar-folder-id').val();
+          var startRowIndex = ($('input[name=start-row-index]').val()) ? parseInt($('input[name=start-row-index]').val()) : -1;
+          var offset = ($('input[name=offset]').val()) ? parseInt($('input[name=offset]').val()) : -1;
+          var isDryRun = $('input[name=do-dry-run').is(":checked");
+
+          $('#progress-bar').html(`
+              <div id="progress" class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+                <div class="spinner-layer spinner-red">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+                <div class="spinner-layer spinner-yellow">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+                <div class="spinner-layer spinner-green">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div><div class="gap-patch">
+                    <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>`);
+          $('#run-export').prop('disabled', true)
+
+          google.script.run
+              .withSuccessHandler(
+                  function (success, element) {
+                    var html = '<p style="color:green;"><b>INFO</b>: ' + success + '<p>';
+                    $('#output-messages').html(html);
+                    $('#progress').attr('style', 'display:none;');
+                    $('#run-export').prop('disabled', false)
+                  })
+              .withFailureHandler(
+                  function (error, element) {
+                    var html = '<p style="color:red;"><b>ERROR</b>: ' + error.message + '<p>';
+                    $('#output-messages').html(html);
+                    $('#progress').attr('style', 'display:none;');
+                    $('#run-export').prop('disabled', false)
+                  })
+              .withUserObject(this)
+              .exportSheetToCedarInstances(headerRowIndex, dataRange, cedarApiKey, cedarUserId, cedarFolderId, isDryRun);
+          return false;
+        }
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    var DIALOG_DIMENSIONS = {
+        width: 800,
+        height: 600
+    };
+    var pickerApiLoaded = false;
+
+    function onApiLoad() {
+      gapi.load('picker', {
+        'callback': function() {
+          pickerApiLoaded = true;
+        }
+      });
+      google.script.run
+          .withSuccessHandler(createPicker)
+          .withFailureHandler(showError)
+          .getOAuthToken();
+    }
+
+    function createPicker(token) {
+      if (pickerApiLoaded && token) {
+        let docsView = new google.picker.DocsView()
+            .setParent('root')
+            .setIncludeFolders(true)
+            .setMimeTypes('application/vnd.google-apps.folder')
+            .setSelectFolderEnabled(true);
+        let picker = new google.picker.PickerBuilder()
+            .addView(docsView)
+            .enableFeature(google.picker.Feature.NAV_HIDDEN)
+            .hideTitleBar()
+            .setSize(DIALOG_DIMENSIONS.width-2, DIALOG_DIMENSIONS.height-2)
+            .setOAuthToken(token)
+            .setCallback(pickerCallback)
+            .setOrigin(google.script.host.origin)
+            .build();
+        picker.setVisible(true);
+      }
+    }
+
+    /**
+     * A callback function that extracts the chosen document's metadata from the
+     * response object. For details on the response object, see
+     * https://developers.google.com/picker/docs/result
+     *
+     * @param {object} data The response object.
+     */
+    function pickerCallback(data) {
+      let action = data[google.picker.Response.ACTION];
+      if (action == google.picker.Action.PICKED) {
+        $('#progress').attr('style', 'display:block;');
+        let doc = data[google.picker.Response.DOCUMENTS][0];
+        let folderId = doc[google.picker.Document.ID];
+        google.script.run
+            .withSuccessHandler(closeDialog)
+            .withFailureHandler(showError)
+            .createCopyFile(folderId);
+      } else if (action == google.picker.Action.CANCEL) {
+        closeDialog();
+      }
+    }
+
+    function closeDialog() {
+      google.script.host.close();
+    }
+
+    function showError(message) {
+      var html = '<p style="color:red;"><b>ERROR</b>: ' + message + '<p>';
+      $('#output-messages').html(html);
+      $('#progress').attr('style', 'display:none;');
+    }
+  </script>
+</head>
+
+<body>
+  <div id="output-messages"></div>
+  <div class="col center" style="padding-top:220px;" id="preloader">
+    <div id="progress" style="display:none;">
+      <div id="spinner" class="preloader-wrapper big active">
+        <div class="spinner-layer big spinner-blue">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="spinner-layer spinner-red">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="spinner-layer spinner-yellow">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+        <div class="spinner-layer spinner-green">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col center" style="margin-top:8px;">Creating a release copy...</div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+</body>
+</html>
