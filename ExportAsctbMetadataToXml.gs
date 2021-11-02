@@ -20,7 +20,7 @@ function exportAsctbMetadataToXml() {
             <nameIdentifier schemeURI="http://orcid.org/" nameIdentifierScheme="ORCID">${metadata.getAuthorOrcids()[index]}</nameIdentifier>
           </creator>
           `
-        })}
+        }).join("\n")}
     </creators>
     <contributors>
         <contributor contributorType="ProjectLeader">
