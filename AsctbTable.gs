@@ -63,6 +63,13 @@ class AsctbTable {
     this.dataWriter.setValueAt(row, column, value);
   }
 
+  getAllGeneMarkers(fromRow, toRow) {
+    let nameColumns = this.geneMarkerColumnsProvider.getNameColumns();
+    let labelColumns = this.geneMarkerColumnsProvider.getLabelColumns();
+    let idColumns = this.geneMarkerColumnsProvider.getIdColumns(); 
+    return this.getRawData(nameColumns, labelColumns, idColumns, fromRow, toRow);
+  }
+
   getGeneMarkers(row) {
     let nameColumns = this.geneMarkerColumnsProvider.getNameColumns();
     let labelColumns = this.geneMarkerColumnsProvider.getLabelColumns();
