@@ -148,26 +148,22 @@ class AsctbTable {
         column = this.header.getColumnIndexByName(idColumns[colIndex]);
         let idValue = this.dataReader.getValueFrom(row, column);
         if (idValue == '') {
-          conceptsWithoutId.push(nameValue);
+          let suffix = nameValue.toLowerCase().trim().replace(/\W+/g, '-').replace(/[^a-z0-9-]+/g, '');
+          idValue = "ASCTB-TEMP:" + suffix;
+        }
+        let idPattern = /.*:.*/;
+        if (idValue.match(idPattern)) {
+          column = this.header.getColumnIndexByName(labelColumns[colIndex]);
+          let labelValue = this.dataReader.getValueFrom(row, column)
+          data.push({
+            id: idValue,
+            label: labelValue,
+            name: nameValue
+          });
         } else {
-          let idPattern = /.*:.*/;
-          if (idValue.match(idPattern)) {
-            column = this.header.getColumnIndexByName(labelColumns[colIndex]);
-            let labelValue = this.dataReader.getValueFrom(row, column)
-            data.push({
-              id: idValue,
-              label: labelValue,
-              name: nameValue
-            });
-          } else {
-            conceptsWithInvalidId.push(nameValue + "=" + idValue);
-          }
+          conceptsWithInvalidId.push(nameValue + "=" + idValue);
         }
       }
-    }
-    if (conceptsWithoutId.length > 0) {
-      throw new Error("[Missing ID][" + category + "]: Could not find ontology ID ["
-          + conceptsWithoutId.length + ", \"" + conceptsWithoutId + "\"](count,concepts)");
     }
     if (conceptsWithInvalidId.length > 0) {
       throw new Error("[Invalid ID][" + category + "]: Could not validate ontology ID ["
