@@ -6,7 +6,8 @@ const PREFIX_TO_IRI_TEMPLATE = {
   "FMAID": "http://purl.org/sig/ont/fma/fma{id}",
   "GO": "http://purl.obolibrary.org/obo/GO_{id}",
   "LMHA": "http://purl.obolibrary.org/obo/LMHA_{id}",
-  "ccfp": "http://purl.org/ccf/provisional/{id}"
+  "ccfp": "http://purl.org/ccf/provisional/{id}",
+  "ASCTB-TEMP": "https://purl.org/ccf/ASCTB-TEMP_{id}"
 };
 
 class CedarInstanceFactory {
