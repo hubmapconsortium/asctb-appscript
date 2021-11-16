@@ -27,7 +27,7 @@ class AsctbTable {
     return this.getMetadata().getCedarTemplateId();
   }
 
-  getAnatomicalStructures(fromRow, toRow) {
+  getAllAnatomicalStructures(fromRow, toRow) {
     let nameColumns = this.anatomicalStructureColumnsProvider.getNameColumns();
     let labelColumns = this.anatomicalStructureColumnsProvider.getLabelColumns();
     let idColumns = this.anatomicalStructureColumnsProvider.getIdColumns();
@@ -42,7 +42,7 @@ class AsctbTable {
     return this.getLastElement(data);
   }
 
-  getCellTypes(fromRow, toRow) {
+  getAllCellTypes(fromRow, toRow) {
     let nameColumns = this.cellTypeColumnsProvider.getNameColumns();
     let labelColumns = this.cellTypeColumnsProvider.getLabelColumns();
     let idColumns = this.cellTypeColumnsProvider.getIdColumns(); 
