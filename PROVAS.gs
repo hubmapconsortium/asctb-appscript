@@ -1,7 +1,7 @@
  /**
   * @customfunction
   */
-function FINDAS(headerRange, dataRange) {
+function PROVAS(headerRange, dataRange) {
   let header = new Header(headerRange[0]);
   let data = dataRange;
   let asctbTable = new AsctbTable(
@@ -19,6 +19,11 @@ function FINDAS(headerRange, dataRange) {
   
   let fromRow = 1;
   let toRow = data.length;
+  let arr = asctbTable.getAllAnatomicalStructures(fromRow, toRow);
 
-  return asctbTable.getAnatomicalStructures(fromRow, toRow);
+  return arr.filter((value) => value[0].includes("ASCTB-TEMP:"))
+    .map(value => value.concat(["AS", "true", value[0], "", "ccf:provisional_class"]))
+    .map(JSON.stringify)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .map(JSON.parse);
 }
