@@ -148,8 +148,7 @@ class AsctbTable {
         column = this.header.getColumnIndexByName(idColumns[colIndex]);
         let idValue = this.dataReader.getValueFrom(row, column);
         if (idValue == '') {
-          let suffix = nameValue.toLowerCase().trim().replace(/\W+/g, '-').replace(/[^a-z0-9-]+/g, '');
-          idValue = "ASCTB-TEMP:" + suffix;
+          idValue = this.getProvisionalId(nameValue);
         }
         let idPattern = /.*:.*/;
         if (idValue.match(idPattern)) {
@@ -185,6 +184,9 @@ class AsctbTable {
         if (prefName != '') {
           column = this.header.getColumnIndexByName(idColumns[colIndex]);
           let id = this.dataReader.getValueFrom(row, column);
+          if (id == '') {
+            id = this.getProvisionalId(prefName);
+          }
           column = this.header.getColumnIndexByName(labelColumns[colIndex]);
           let label = this.dataReader.getValueFrom(row, column)
           data.push([id, label, prefName]);
@@ -192,6 +194,11 @@ class AsctbTable {
       }
     }
     return data;
+  }
+
+  getProvisionalId(value) {
+    let suffix = value.toLowerCase().trim().replace(/\W+/g, '-').replace(/[^a-z0-9-]+/g, '');
+   return "ASCTB-TEMP:" + suffix;
   }
 
   getFirstElement(arr) {
