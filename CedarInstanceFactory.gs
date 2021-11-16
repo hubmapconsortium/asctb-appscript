@@ -1,7 +1,7 @@
 const PREFIX_TO_IRI_TEMPLATE = {
   "UBERON": "http://purl.obolibrary.org/obo/UBERON_{id}",
   "CL": "http://purl.obolibrary.org/obo/CL_{id}",
-  "HGNC": "http://ncicb.nci.nih.gov/xml/owl/EVS/Hugo.owl#HGNC_{id}",
+  "HGNC": "http://identifiers.org/hgnc/{id}",
   "fma": "http://purl.org/sig/ont/fma/fma{id}",
   "FMAID": "http://purl.org/sig/ont/fma/fma{id}",
   "GO": "http://purl.obolibrary.org/obo/GO_{id}",
