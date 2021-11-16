@@ -78,6 +78,13 @@ class AsctbTable {
     return data;
   }
 
+  getAllProteinMarkers(row) {
+    let nameColumns = this.proteinMarkerColumnsProvider.getNameColumns();
+    let labelColumns = this.proteinMarkerColumnsProvider.getLabelColumns();
+    let idColumns = this.proteinMarkerColumnsProvider.getIdColumns();
+    return this.getRawData(nameColumns, labelColumns, idColumns, fromRow, toRow);
+  }
+
   getProteinMarkers(row) {
     let nameColumns = this.proteinMarkerColumnsProvider.getNameColumns();
     let labelColumns = this.proteinMarkerColumnsProvider.getLabelColumns();
