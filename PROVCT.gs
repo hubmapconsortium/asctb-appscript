@@ -1,7 +1,7 @@
  /**
   * @customfunction
   */
-function FINDCT(headerRange, dataRange) {
+function PROVCT(headerRange, dataRange) {
   let header = new Header(headerRange[0]);
   let data = dataRange;
   let asctbTable = new AsctbTable(
@@ -19,6 +19,11 @@ function FINDCT(headerRange, dataRange) {
   
   let fromRow = 1;
   let toRow = data.length;
+  let arr = asctbTable.asctbTable.getAllCellTypes(fromRow, toRow);
 
-  return asctbTable.getCellTypes(fromRow, toRow);
+  return arr.filter((value) => value[0].includes("ASCTB-TEMP:"))
+    .map(value => value.concat(["CT", "true", value[0], "", "ccf:provisional_class"]))
+    .map(JSON.stringify)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .map(JSON.parse);
 }
