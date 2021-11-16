@@ -59,14 +59,12 @@ class CedarInstanceFactory {
         },
         "anatomical_structure": "http://purl.org/ccf/latest/ccf.owl#has_anatomical_structure",
         "cell_type": "http://purl.org/ccf/latest/ccf.owl#has_cell_type",
-        "is_ftu": "http://purl.org/ccf/latest/ccf.owl#is_ftu",
         "gene_biomarker": "http://purl.org/ccf/latest/ccf.owl#has_gene_biomarker",
         "protein_biomarker": "http://purl.org/ccf/latest/ccf.owl#has_protein_biomarker",
         "doi": "http://purl.org/ccf/latest/ccf.owl#has_doi"
       },
       "anatomical_structure": {},
       "cell_type": {},
-      "is_ftu": {},
       "gene_biomarker": [],
       "protein_biomarker": [],
       "doi": [],
@@ -82,7 +80,6 @@ class CedarInstanceFactory {
     asctbInstance["anatomical_structure"]['rdfs:label'] = anatomicalStructure.label;
     asctbInstance["cell_type"]['@id'] = this.expand(cellType.id);
     asctbInstance["cell_type"]['rdfs:label'] = cellType.label;
-    asctbInstance["is_ftu"]['@value'] = (ftuFlag) ? "Yes" : "No";
     this.addBioMarkers(asctbInstance["gene_biomarker"], geneMarkers);
     this.addBioMarkers(asctbInstance["protein_biomarker"], proteinMarkers);
     this.addReferences(asctbInstance["doi"], referenceDois);
