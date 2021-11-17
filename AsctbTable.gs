@@ -155,26 +155,33 @@ class AsctbTable {
     let numOfColumns = nameColumns.length;
     let conceptsWithInvalidId = [];
     for (let colIndex = 0; colIndex < numOfColumns; colIndex++) {
+      // Read the Name column
       column = this.header.getColumnIndexByName(nameColumns[colIndex]);
       let nameValue = this.dataReader.getValueFrom(row, column);
       if (nameValue != '') {
+        // Read the ID column
         column = this.header.getColumnIndexByName(idColumns[colIndex]);
         let idValue = this.dataReader.getValueFrom(row, column);
         if (idValue == '') {
           idValue = this.getProvisionalId(nameValue);
-        }
-        let idPattern = /.*:.*/;
-        if (idValue.match(idPattern)) {
-          column = this.header.getColumnIndexByName(labelColumns[colIndex]);
-          let labelValue = this.dataReader.getValueFrom(row, column)
-          data.push({
-            id: idValue,
-            label: labelValue,
-            name: nameValue
-          });
         } else {
-          conceptsWithInvalidId.push(nameValue + "=" + idValue);
+          let idPattern = /.*:.*/;
+          if (!idValue.match(idPattern)) {
+            conceptsWithInvalidId.push(nameValue + "=" + idValue);
+            continue;
+          }
         }
+        // Read the LABEL column
+        column = this.header.getColumnIndexByName(labelColumns[colIndex]);
+        let labelValue = this.dataReader.getValueFrom(row, column)
+        if (labelValue == '') {
+          labelValue = nameValue;
+        }
+        data.push({
+          id: idValue,
+          label: labelValue,
+          name: nameValue
+        });
       }
     }
     if (conceptsWithInvalidId.length > 0) {
