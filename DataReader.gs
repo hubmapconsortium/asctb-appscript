@@ -4,6 +4,7 @@ class DataReader {
   }
 
   getValueFrom(row, column) {
-    return this.table[row][column];
+    let value = this.table[row][column];
+    return value.trim();
   }
 }
