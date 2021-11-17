@@ -57,14 +57,14 @@ class CedarInstanceFactory {
         "skos:notation": {
           "@type": "xsd:string"
         },
-        "anatomical_structure": "http://purl.org/ccf/latest/ccf.owl#has_anatomical_structure",
         "cell_type": "http://purl.org/ccf/latest/ccf.owl#has_cell_type",
+        "anatomical_structure": "http://purl.org/ccf/latest/ccf.owl#has_anatomical_structure",
         "gene_biomarker": "http://purl.org/ccf/latest/ccf.owl#has_gene_biomarker",
         "protein_biomarker": "http://purl.org/ccf/latest/ccf.owl#has_protein_biomarker",
         "doi": "http://purl.org/ccf/latest/ccf.owl#has_doi"
       },
-      "anatomical_structure": {},
       "cell_type": {},
+      "anatomical_structure": {},
       "gene_biomarker": [],
       "protein_biomarker": [],
       "doi": [],
