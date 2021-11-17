@@ -70,7 +70,6 @@ function exportSheetToCedarInstances(headerRow, dataRange, cedarApiKey, cedarUse
         storeError(rowNumber, err, listOfErrors);
       }
     }
-    let ftuFlag = asctbTable.getFtuFlag(row)
     let referenceDois = asctbTable.getReferenceDois(row);
     let cedarInstanceId = asctbTable.getCedarInstanceId(row);
 
@@ -78,7 +77,6 @@ function exportSheetToCedarInstances(headerRow, dataRange, cedarApiKey, cedarUse
       let cedarInstance = cedarInstanceFactory.createJsonInstance(
           anatomicalStructure, 
           cellType,
-          ftuFlag,
           geneMarkers,
           proteinMarkers,
           referenceDois,

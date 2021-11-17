@@ -15,7 +15,7 @@ class CedarInstanceFactory {
     this.cedarUserId = cedarUserId;
   }
 
-  createInstance(anatomicalStructure, cellType, ftuFlag, geneMarkers, proteinMarkers, referenceDois, templateId, instanceId=null) {
+  createInstance(anatomicalStructure, cellType, geneMarkers, proteinMarkers, referenceDois, templateId, instanceId=null) {
     let now = new Date();
     let timezone = SpreadsheetApp.getActive().getSpreadsheetTimeZone();
     let dateTimeInfo = Utilities.formatDate(now, timezone, "yyyy-MM-dd'T'HH:mm:ss'Z'");
