@@ -153,7 +153,6 @@ class AsctbTable {
     let column = 0;
     let data = [];
     let numOfColumns = nameColumns.length;
-    let conceptsWithoutId = [];
     let conceptsWithInvalidId = [];
     for (let colIndex = 0; colIndex < numOfColumns; colIndex++) {
       column = this.header.getColumnIndexByName(nameColumns[colIndex]);
