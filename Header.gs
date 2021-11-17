@@ -8,7 +8,7 @@ class Header {
   }
 
   getColumnIndexByName(columnName) {
-    return this.headerColumns.indexOf(columnName) + 1;
+    return this.headerColumns.indexOf(columnName);
   }
 
   hasColumn(columnName) {

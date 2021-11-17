@@ -1,7 +1,8 @@
 function exportSheetToCedarInstances(headerRow, dataRange, cedarApiKey, cedarUserId, cedarFolderId, isDryRun) {
   let sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   let header = new HeaderProvider(sheet).getHeaderFromIndex(headerRow);
-  let data = sheet.getRange(dataRange).getValues();
+  let range = sheet.getRange(dataRange);
+  let data = range.getValues();
   let metadata = new MetadataProvider(sheet).getMetadata();
   let asctbTable = new AsctbTable(
       header,
@@ -23,13 +24,11 @@ function exportSheetToCedarInstances(headerRow, dataRange, cedarApiKey, cedarUse
   let listOfErrors = [];
   let successCounter = 0;
   let failureCounter = 0;
-  
-  let startRow = 1;
-  let endRow = data.length;
 
   let hasError = false;
-  for (let row = startRow; row <= endRow; row++) {
-    let rowNumber = row + headerRow;
+  let startRowNumber = range.getRow();
+  for (let row = 0; row < data.length; row++) {
+    let rowNumber = startRowNumber + row;
     let anatomicalStructure = null;
     try {
       anatomicalStructure = asctbTable.getAnatomicalStructure(row);
@@ -130,7 +129,7 @@ let returnOrThrowError = (successCounter, failureCounter, listOfErrors) => {
 }
 
 function shouldExportSheetToCedarInstances() {
-  exportSheetToCedarInstances(11, -1, -1,
+  exportSheetToCedarInstances(11, "A15:EH17",
       "8b9e3e4d8f0aa726e27aa314174b6d5491bbdf77f2bca6e796d6f0ef8ec6dee4",
       "f58ef265-1d78-4687-b1f5-73c932024d68",
       "15b1fd17-0c96-42ff-b680-92674ba1779f", true);

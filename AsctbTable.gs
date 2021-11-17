@@ -124,7 +124,7 @@ class AsctbTable {
   insertCedarInstanceId(row, value) {
     this.checkDataWriter();
     let instanceIdColumn = this.cedarColumnsProvider.getIdColumn();
-    let column = this.header.getColumnIndexByName(instanceIdColumn);
+    let column = this.header.getColumnIndexByName(instanceIdColumn) + 1;
     let hyperlink = "https://cedar.metadatacenter.org/instances/edit/" + value;
     this.dataWriter.setValueAt(row, column, `=HYPERLINK("${hyperlink}","${value}")`);
   }
@@ -145,7 +145,7 @@ class AsctbTable {
   insertCedarDateUploaded(row, value) {
     this.checkDataWriter();
     let dateUploadedColumn = this.cedarColumnsProvider.getDateUploadedColumn();
-    let column = this.header.getColumnIndexByName(dateUploadedColumn);
+    let column = this.header.getColumnIndexByName(dateUploadedColumn) + 1;
     this.dataWriter.setValueAt(row, column, value);
   }
 

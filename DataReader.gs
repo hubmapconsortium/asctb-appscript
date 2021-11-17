@@ -4,6 +4,6 @@ class DataReader {
   }
 
   getValueFrom(row, column) {
-    return this.table[row-1][column-1];
+    return this.table[row][column];
   }
 }
