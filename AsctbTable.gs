@@ -116,7 +116,7 @@ class AsctbTable {
 
   getCedarInstanceId(row) {
     let instanceIdColumn = this.cedarColumnsProvider.getIdColumn();
-    let column = this.header.getColumnIndexByName(instanceIdColumn);
+    let column = this.header.getColumnIndexByName(instanceIdColumn) + 1;
     let instanceId = this.dataReader.getValueFrom(row, column);
     return instanceId == '' ? null : instanceId;
   }
