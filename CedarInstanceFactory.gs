@@ -3,6 +3,7 @@ const PREFIX_TO_IRI_TEMPLATE = {
   "CL": "http://purl.obolibrary.org/obo/CL_{id}",
   "HGNC": "http://identifiers.org/hgnc/{id}",
   "fma": "http://purl.org/sig/ont/fma/fma{id}",
+  "FMA": "http://purl.org/sig/ont/fma/fma{id}",
   "FMAID": "http://purl.org/sig/ont/fma/fma{id}",
   "GO": "http://purl.obolibrary.org/obo/GO_{id}",
   "PR": "http://purl.obolibrary.org/obo/PR_{id}",
