@@ -5,6 +5,7 @@ const PREFIX_TO_IRI_TEMPLATE = {
   "fma": "http://purl.org/sig/ont/fma/fma{id}",
   "FMAID": "http://purl.org/sig/ont/fma/fma{id}",
   "GO": "http://purl.obolibrary.org/obo/GO_{id}",
+  "PR": "http://purl.obolibrary.org/obo/PR_{id}",
   "LMHA": "http://purl.obolibrary.org/obo/LMHA_{id}",
   "ccfp": "http://purl.org/ccf/provisional/{id}",
   "ASCTB-TEMP": "https://purl.org/ccf/ASCTB-TEMP_{id}"
