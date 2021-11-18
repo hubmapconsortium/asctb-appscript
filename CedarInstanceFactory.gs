@@ -129,8 +129,9 @@ class CedarInstanceFactory {
   }
 
   expand(prefixedName) {
-    let prefix = prefixedName.split(':')[0];
+    let prefix = prefixedName.split(':')[0].trim();
+    let name = prefixedName.split(':')[1].trim();
     let iriTemplate = PREFIX_TO_IRI_TEMPLATE[prefix];
-    return iriTemplate.replace("{id}", prefixedName.split(':')[1]);
+    return iriTemplate.replace("{id}", name);
   }
 }
