@@ -197,7 +197,7 @@ class AsctbTable {
   getRawData(nameColumns, labelColumns, idColumns, fromRow, toRow) {
     let data = [];
     let numOfColumns = nameColumns.length;
-    for (let row = fromRow; row <= toRow; row++) {
+    for (let row = fromRow; row < toRow; row++) {
       for (let colIndex = 0; colIndex < numOfColumns; colIndex++) {
         let column = this.header.getColumnIndexByName(nameColumns[colIndex]);
         let prefName = this.dataReader.getValueFrom(row, column);
