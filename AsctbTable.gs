@@ -207,6 +207,9 @@ class AsctbTable {
           if (id == '') {
             id = this.getProvisionalId(prefName);
           }
+          if (label == '') {
+            label = prefName;
+          }
           column = this.header.getColumnIndexByName(labelColumns[colIndex]);
           let label = this.dataReader.getValueFrom(row, column)
           data.push([id, label, prefName]);
